@@ -32,10 +32,9 @@ See NainiV1 process a geological document in real-time!
 
 <p align="center">
   <!-- IMPORTANT: Replace this placeholder link with the actual link to your GIF or video -->
-  <img src="NainiAnimation.gif" alt="NainiV1 Demo Animation" width="1400"/>
+  <img src="NainiAnimation.gif" alt="NainiV1 Demo Animation" width="2000"/>
 </p>
 
-*(Replace the placeholder link above with a direct link to your hosted GIF. You can upload GIFs directly to GitHub issues/PRs and use that link, or host it elsewhere.)*
 
 ---
 
@@ -56,8 +55,8 @@ See NainiV1 process a geological document in real-time!
 *   **Core Language:** Python 3.x
 *   **LLM:** Fine-tuned Qwen2 (7 Billion Parameters)
 *   **Parsing Libraries:** Camelot-py, img2table, [List any other key parsing libs, e.g., PyPDF2, OpenCV]
-*   **AI/ML Frameworks:** [List primary frameworks, e.g., PyTorch, Transformers (Hugging Face)]
-*   **Core Data Handling:** Pandas, NumPy
+*   **AI/ML Frameworks:** LangGraph,LangChain,PyTorch, Transformers (Hugging Face),YOLOv10, Vision Transformers (ViTs) for layout segmentation
+*   **Core Data Handling:** Pandas, NumPy,ChromaDB, FAISS
 
 ---
 
@@ -72,68 +71,6 @@ See NainiV1 process a geological document in real-time!
 
 ---
 
-## ⚙️ Installation
-
-Follow these steps to get NainiV1 running on your local machine:
-
-1.  **Clone the Repository:**
-    ```bash
-    git clone [Your GitHub Repository Link]
-    cd NainiV1 # Or your repository's directory name
-    ```
-
-2.  **Set up a Virtual Environment (Recommended):**
-    ```bash
-    python -m venv venv
-    # Activate the environment:
-    # Linux/macOS:
-    source venv/bin/activate
-    # Windows:
-    .\venv\Scripts\activate
-    ```
-
-3.  **Install Dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-    *Note: Depending on your system and CUDA version, you might need specific versions of PyTorch or other GPU-related libraries. Consult their official documentation if you encounter issues.*
-
-4.  **Download the Fine-Tuned Qwen2 Model:**
-    *   You need to obtain the fine-tuned Qwen2 7B model files used by NainiV1.
-    *   **[IMPORTANT: Provide clear instructions here. Examples:]**
-        *   *Option A (If hosting on Hugging Face):* "Download the model files from our Hugging Face repository: [Link to HF Repo]. Place them in the `models/` directory."
-        *   *Option B (If providing download script):* "Run the download script: `python download_model.py`. The model will be saved to the `models/` directory."
-        *   *Option C (Manual download link):* "Download the model archive [Link to model file/archive] and extract its contents into the `models/` directory within this project."
-    *   Ensure the application knows where to find the model (you might need a configuration file or environment variable).
-
----
-
-## ▶️ Usage
-
-1.  **Prepare Your Input:** Ensure your geological document (e.g., PDF, image file) is ready.
-
-2.  **Run the Application:**
-    Execute the main script from your terminal. Adjust the command based on your specific script and arguments:
-
-    ```bash
-    python main.py --input_path /path/to/your/document.pdf [Other arguments like --output_path, etc.]
-    ```
-
-    *   Replace `/path/to/your/document.pdf` with the actual path to your input file.
-    *   Include any other necessary command-line arguments (e.g., `--output_dir`, `--config_file`). List and explain the key arguments here:
-        *   `--input_path`: **Required.** Path to the input geological document (PDF, JPG, PNG, etc.).
-        *   `--output_dir`: *Optional.* Directory to save results (default: `output/`).
-        *   `[--another_arg]`: *[Explain other important arguments]*.
-
-3.  **Check the Output:**
-    NainiV1 will process the document and generate its analysis. The output might include:
-    *   Extracted tables (e.g., as CSV files).
-    *   A summary report (e.g., a text file).
-    *   Annotated images or diagrams.
-    *   [Describe the specific output format(s) Naini produces].
-    Check the specified output directory (or the default `output/` directory).
-
----
 
 ## 🤝 Contributing
 
@@ -152,12 +89,14 @@ Please report any bugs or suggest features by opening an issue on the GitHub rep
 
 ## 📜 License
 
-This project is licensed under the **[Specify Your License Name - e.g., MIT License, Apache 2.0]**. See the `LICENSE` file for details.
+This project is licensed under the **Apache 2.0**.
+COZ Sharing is Caring 
+See the `LICENSE` file for details
 
 ---
 
 ## 📧 Contact
 
-For questions or support, please [Open an issue on GitHub] or contact [Your Name/Email/Preferred Contact Method - Optional].
+For questions or support, please "Open an issue on GitHub" or contact saisatyam2016@gmail.com
 
 ---
