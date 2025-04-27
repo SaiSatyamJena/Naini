@@ -66,7 +66,7 @@ See NainiV1 process a geological document in real-time!
 *   **GPU:** NVIDIA GPU with CUDA support is highly recommended.
 *   **VRAM:** Approximately 14 GB or more.
 *   **RAM:** 16 GB+ recommended.
-*   **OS:** Linux, macOS, or Windows (Linux generally preferred for ML workloads).
+*   **OS:** Dockerfile Pushed to Github so can literally run in ANY environment just download Docker APP
 *   **Dependencies:** See `requirements.txt`.
 
 ---
