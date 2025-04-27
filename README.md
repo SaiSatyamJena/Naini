@@ -32,7 +32,7 @@ See NainiV1 process a geological document in real-time!
 
 <p align="center">
   <!-- IMPORTANT: Replace this placeholder link with the actual link to your GIF or video -->
-  <img src="[NainiAnimation.gif]" alt="NainiV1 Demo Animation" width="700"/>
+  <img src="NainiAnimation.gif" alt="NainiV1 Demo Animation" width="700"/>
 </p>
 
 *(Replace the placeholder link above with a direct link to your hosted GIF. You can upload GIFs directly to GitHub issues/PRs and use that link, or host it elsewhere.)*
