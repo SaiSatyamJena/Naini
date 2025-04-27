@@ -1,0 +1,57 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "Naini Project Environment",
+    "build": {
+        "dockerfile": "Dockerfile", // Keep this pointing to Dockerfile inside .devcontainer
+        "context": "..",           // <--- ADD THIS LINE
+        "args": {
+            "PYTHON_VERSION": "3.10"
+        }
+    },
+    "workspaceFolder": "/workspace",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    // Enable GPU access for the container
+  "runArgs": [
+    "--gpus=all",
+    "--shm-size=16gb" // Increase shared memory
+  ],
+
+    // Use the 'customizations' property for VS Code specific settings and extensions
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.python",         // Python language support
+                "ms-python.vscode-pylance", // Python language server
+                "ms-azuretools.vscode-docker", // Docker integration
+                "ms-toolsai.jupyter"        // Jupyter notebook support
+                // Add other useful extensions like GitLens, Prettier, etc.
+            ],
+
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                // Pylint setup might require more specific configurations if needed
+                "python.linting.pylintEnabled": true,
+                "python.linting.enabled": true
+                // Add other settings as needed
+            }
+        }
+    },
+
+
+    // Optional: Forward ports if you run web services (like Jupyter Lab or CVAT)
+    // "forwardPorts": [8888], // Example for Jupyter Lab
+
+    // Optional: Run commands after the container is created
+    // "postCreateCommand": "echo 'Container created!'",
+
+    // Optional: Add GPU support (Uncomment if needed)
+    // "runArgs": [
+    //  "--gpus=all",
+    //  "--shm-size=1g"
+    // ],
+
+    "remoteUser": "root"
+}
