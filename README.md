@@ -62,12 +62,65 @@ See NainiV1 process a geological document in real-time!
 
 ## ✅ Requirements
 
-*   **Python:** 3.8 or higher recommended
-*   **GPU:** NVIDIA GPU with CUDA support is highly recommended.
-*   **VRAM:** Approximately 14 GB or more.
-*   **RAM:** 16 GB+ recommended.
-*   **OS:** Dockerfile Pushed to Github so can literally run in ANY environment just download Docker APP
-*   **Dependencies:** See `requirements.txt`.
+- **Python:** 3.8 or higher recommended  
+- **GPU:** NVIDIA GPU with CUDA support is highly recommended.  
+- **VRAM:** Approximately 14 GB or more.  
+- **RAM:** 16 GB+ recommended.  
+- **OS:** Dockerfile pushed to GitHub, so it can run in any environment—just download the Docker app.  
+- **Dependencies:** See `requirements.txt` for exact versions.  
+
+**Required Libraries:**  
+
+- **Core ML/Vision/LLM Libraries**  
+  - torch  
+  - torchvision  
+  - transformers  
+  - accelerate  
+  - bitsandbytes  
+  - timm  
+
+- **LangChain & RAG Components**  
+  - langchain  
+  - langchain-community  
+  - langchain-core  
+  - langchain-huggingface  
+  - sentence-transformers  
+  - faiss-cpu  
+  - rank_bm25  
+  - tiktoken  
+
+- **PDF & Image Handling**  
+  - pdf2image  
+  - Pillow  
+  - pymupdf  
+  - opencv-python  
+
+- **OCR**  
+  - pytesseract  
+
+- **Table Extraction**  
+  - img2table  
+  - tabulate  
+  - camelot-py[cv]  
+
+- **UI**  
+  - gradio  
+  - fastapi  
+
+- **Dev & Utility**  
+  - jupyterlab  
+  - ipykernel  
+  - numpy  
+  - pandas  
+  - matplotlib  
+  - joblib  
+  - protobuf  
+  - scipy  
+  - typing-inspect  
+  - typing_extensions  
+  - pydantic
+
+
 
 ---
 
