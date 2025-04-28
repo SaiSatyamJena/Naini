@@ -54,7 +54,7 @@ See NainiV1 process a geological document in real-time!
 
 *   **Core Language:** Python 3.x
 *   **LLM:** Fine-tuned Qwen2 (7 Billion Parameters)
-*   **Parsing Libraries:** Camelot-py, img2table, [List any other key parsing libs, e.g., PyPDF2, OpenCV]
+*   **Parsing Libraries:** Camelot-py, img2table etc
 *   **AI/ML Frameworks:** LangGraph,LangChain,PyTorch, Transformers (Hugging Face),YOLOv10, Vision Transformers (ViTs) for layout segmentation
 *   **Core Data Handling:** Pandas, NumPy,ChromaDB, FAISS
 
