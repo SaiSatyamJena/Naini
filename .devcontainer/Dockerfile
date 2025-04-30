@@ -25,6 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # Naini System Dependencies
     poppler-utils \
     tesseract-ocr \
+    tesseract-ocr-hin \
+    tesseract-ocr-eng \
     libgl1-mesa-glx \
     ghostscript \
     # Build tools often needed for pip packages
