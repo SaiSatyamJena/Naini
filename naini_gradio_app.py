@@ -22,7 +22,7 @@ from transformers import (
     StoppingCriteria, StoppingCriteriaList
 )
 from threading import Thread
-from langchain_huggingface import HuggingFacePipeline, HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFacePipeline,SentenceTransformerEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, BaseMessage
 from langchain_core.runnables import RunnableConfig, Runnable, RunnableLambda
@@ -41,7 +41,7 @@ try:
 except ImportError as e: print(f"FATAL: Error importing Naini modules: {e}"); sys.exit(1)
 
 # --- Logging Setup ---
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - [%(name)s:%(lineno)d] - %(message)s', force=True)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - [%(name)s:%(lineno)d] - %(message)s', force=True)
 log = logging.getLogger(__name__)
 
 # --- Global State ---

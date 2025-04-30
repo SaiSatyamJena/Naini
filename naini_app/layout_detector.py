@@ -5,13 +5,14 @@ import torch
 from PIL import Image
 import logging
 from pathlib import Path
+from transformers import pipeline
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Global variables for processor and model to load them only once
 _processor = None
 _model = None
-_model_name = "cmarkea/detr-layout-detection" # Define model name here
+_model_name = "microsoft/table-transformer-detection" # Define model name here
 
 def load_layout_model_and_processor(model_name=_model_name):
     """Loads the DETR model and its image processor."""
@@ -45,73 +46,91 @@ def load_layout_model_and_processor(model_name=_model_name):
         _processor, _model = None, None # Reset on failure
         return None, None
 
-def detect_layout_elements(processor, model, image_path, detection_threshold=0.4):
+def detect_layout_elements(processor, model, image_path, detection_threshold=0.8): # << INCREASED Threshold slightly
     """
-    Detects layout elements in an image using the DETR model.
+    Detects layout elements including tables in an image using a pipeline.
+    Now adapted for models like microsoft/table-transformer-detection.
 
     Args:
-        processor: The loaded AutoImageProcessor object.
-        model: The loaded DetrForSegmentation model object.
+        processor: The loaded processor (may not be strictly needed by pipeline, but passed for consistency).
+        model: The loaded model (may not be strictly needed by pipeline, but passed for consistency).
         image_path: Path to the input image.
-        detection_threshold: Confidence threshold for filtering detections.
+        detection_threshold: Confidence threshold for filtering detections (0.0 to 1.0).
+                            Table Transformers often require higher thresholds (e.g., 0.7-0.9).
 
     Returns:
         A list of dictionaries, where each dictionary represents a detected element
-        with keys: 'box' (list [x1, y1, x2, y2]), 'label' (str), 'confidence' (float).
-        Returns an empty list if detection fails.
+        with keys: 'box' (list [x1, y1, x2, y2]), 'label' (str), 'score' (float).
+        Returns an empty list if detection fails. Returns original labels from the model.
     """
+    # Note: This pipeline approach simplifies handling different detection models.
+    # It might load the model again internally if not perfectly cached, but ensures compatibility.
+    # We pass processor/model mainly to check they were loaded initially.
     if not processor or not model:
-        logging.error("DETR processor or model not provided for detection.")
-        return []
+         log.error("DETR processor or model not provided/loaded for detection.")
+         return []
     if not Path(image_path).exists():
-        logging.error(f"Image path does not exist for detection: {image_path}")
-        return []
+         log.error(f"Image path does not exist for detection: {image_path}")
+         return []
 
-    logging.info(f"Running DETR layout detection for: {image_path}")
-
+    # <<< USING PIPELINE INSTEAD OF MANUAL POST-PROCESSING >>>
     try:
-        image = Image.open(image_path).convert("RGB")
+         log.info(f"Running Object Detection pipeline for: {image_path} using model {_model_name}")
+         # Use the object-detection pipeline directly with the specified model
+         object_detector = pipeline("object-detection", model=_model_name)
 
-        # Preprocess image
-        inputs = processor(images=image, return_tensors="pt")
+         # Perform inference
+         results = object_detector(image_path) # Pipeline handles image loading/preprocessing
 
-        # Placeholder: Move inputs to the same device as the model if using GPU
-        # inputs = {k: v.to(model.device) for k, v in inputs.items()}
+         # Filter results based on the threshold and format output
+         detections = []
+         log.info(f"Raw pipeline detections count: {len(results)}") # Log how many raw detections
+         for detection in results:
+              # Example detection: {'score': 0.999, 'label': 'table', 'box': {'xmin': 10, 'ymin': 20, 'xmax': 100, 'ymax': 200}}
+              score = detection.get('score', 0.0)
+              label = detection.get('label', 'unknown').lower() # Use lower case label
+              box_dict = detection.get('box', {})
 
-        # Perform inference
-        with torch.inference_mode():
-            outputs = model(**inputs)
+              # <<< CRITICAL LABEL MAPPING (Example) >>>
+              # Map Table Transformer specific labels if needed
+              if label == 'table':
+                   pass # Keep 'table' label
+              elif label == 'table column': # Often detected, maybe useful later but skip for now
+                  log.debug(f"Skipping 'table column' detection: {detection}")
+                  continue
+              elif label == 'table row': # Often detected, maybe useful later but skip for now
+                   log.debug(f"Skipping 'table row' detection: {detection}")
+                   continue
+              # Add other label mappings or filtering if the new model has different output classes
+              # e.g., map 'text' to 'Text', 'figure' to 'Picture', etc.
 
-        # Post-process to get bounding boxes
-        # target_sizes expects a list of tuples [(height, width)]
-        target_sizes = [image.size[::-1]] # PIL size is (width, height), need (height, width)
-        results = processor.post_process_object_detection(
-            outputs, threshold=detection_threshold, target_sizes=target_sizes
-        )[0] # Get results for the first (and only) image
+              # Apply threshold filter
+              if score >= detection_threshold and box_dict:
+                    formatted_box = [
+                        box_dict.get('xmin', 0),
+                        box_dict.get('ymin', 0),
+                        box_dict.get('xmax', 0),
+                        box_dict.get('ymax', 0)
+                    ]
+                    detections.append(
+                        {
+                            "score": score, # Keep 'score' from pipeline
+                            "label": label, # Use the (potentially mapped) label
+                            "box": formatted_box, # Standardize box format
+                        }
+                    )
+                    log.debug(f"  KEEPING detection: Score={score:.3f}, Label='{label}', Box={formatted_box}")
+              else:
+                    log.debug(f"  FILTERING detection: Score={score:.3f} (<{detection_threshold}), Label='{label}', Box={box_dict}")
 
-        detections = []
-        # Ensure model.config.id2label is available
-        if hasattr(model, 'config') and hasattr(model.config, 'id2label'):
-            id2label = model.config.id2label
-            for score, label_id, box in zip(results["scores"], results["labels"], results["boxes"]):
-                label = id2label.get(label_id.item(), "unknown") # Get label name from ID
-                detections.append(
-                    {
-                        "score": score.item(), # DETR uses 'score'
-                        "confidence": score.item(), # Add 'confidence' for consistency
-                        "label": label,
-                        "box": box.tolist(), # Box format [xmin, ymin, xmax, ymax]
-                    }
-                )
-            logging.info(f"Detected {len(detections)} elements in {image_path} with threshold {detection_threshold}")
-        else:
-             logging.error("Cannot map label IDs to names. model.config.id2label not found.")
 
-        return detections
+         log.info(f"Detected and kept {len(detections)} elements in {image_path} with threshold {detection_threshold}")
+         return detections
 
     except Exception as e:
-        logging.error(f"Error during DETR prediction for {image_path}: {e}", exc_info=True)
-        return []
+         log.error(f"Error during object detection pipeline for {image_path}: {e}", exc_info=True)
+         return []
+# --- END REPLACEMENT ---
 
 if __name__ == '__main__':
     print("Testing layout_detector.py with DETR model...")
