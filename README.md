@@ -1,7 +1,7 @@
 # Agentic AI Geologist "Naini" V1 🏔️🧠
 
 <p align="center">
-  <img src="Naini_pic.png" alt="Naini AI Geologist Logo" width="400"/>
+  <img src="Naini_pic.png" alt="Naini AI Geologist Logo" width="200"/>
 </p>
 
 <p align="center">
