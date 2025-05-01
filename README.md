@@ -150,6 +150,6 @@ See the `LICENSE` file for details
 
 ## 📧 Contact
 
-For questions or support, please "Open an issue on GitHub" or contact saisatyam2016@gmail.com
+For questions or support, please "Open an issue on GitHub"
 
 ---
