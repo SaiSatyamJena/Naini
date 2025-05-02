@@ -1,7 +1,7 @@
 # Agentic AI Geologist "Naini" V1 🏔️🧠
 
 <p align="center">
-  <img src="Naini_pic.png" alt="Naini AI Geologist Logo" width="400"/>
+  <img src="Naini_pic.png" alt="Naini AI Geologist Logo" width="200"/>
 </p>
 
 <p align="center">
@@ -150,6 +150,6 @@ See the `LICENSE` file for details
 
 ## 📧 Contact
 
-For questions or support, please "Open an issue on GitHub" or contact saisatyam2016@gmail.com
+For questions or support, please "Open an issue on GitHub"
 
 ---
