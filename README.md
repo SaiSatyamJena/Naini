@@ -46,7 +46,10 @@ See NainiV1 process a geological document in real-time!
 *   **💻 100% Local Operation:** Ensures data privacy and security by running entirely on your hardware.
 *   **📉 Low Resource Requirement:** Operable on systems with ~14GB of VRAM, making advanced AI accessible.
 *   **💰 Zero API Costs:** Completely free to run after initial setup.
-*   **🧩 Agentic Workflow** 
+*   **🧩 Agentic Workflow**
+*   <p align="center">
+    <img src="overview.png" alt="Naini AI Geologist Logo" width="1000"/>
+    </p>
 
 ---
 
