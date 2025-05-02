@@ -48,7 +48,7 @@ See NainiV1 process a geological document in real-time!
 *   **💰 Zero API Costs:** Completely free to run after initial setup.
 *   **🧩 Agentic Workflow**
 *   <p align="center">
-    <img src="overview.png" alt="Naini AI Geologist Logo" width="1000"/>
+    <img src="overview.png" alt="Naini AI Geologist Logo" width="500"/>
     </p>
 
 ---
